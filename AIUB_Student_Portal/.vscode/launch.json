@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Run AIUB Student Portal (Start.java)",
+      "request": "launch",
+      "mainClass": "Start",
+      "projectName": "AIUB_Portal"
+    }
+  ]
+}
