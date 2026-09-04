@@ -1,4 +1,2 @@
 # AIUB Faculty Database File
-# Format: ID;Name;Email;Phone;Password;Designation;Department;RoomNumber
 F-1002;Dr. M. M. Rahman;m.rahman@aiub.edu;+880 1912-334455;pass123;Associate Professor;Computer Science & Engineering;Room D-402, Building D
-F-1005;Engr. K. Hasan;k.hasan@aiub.edu;+880 1611-998877;pass123;Assistant Professor;Computer Science & Engineering;Room D-310, Building D

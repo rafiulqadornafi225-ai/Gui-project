@@ -10,7 +10,6 @@ import model.Notice;
 import model.Person;
 import model.Student;
 
-
 public class PortalManager {
     private List<Student> students;
     private List<Faculty> facultyMembers;
@@ -34,7 +33,6 @@ public class PortalManager {
         loadAllDataFromFiles();
     }
 
-    // Default AIUB Admin Account
     private void initDefaultAdmin() {
         administrators.add(new Admin(
             "admin",
@@ -47,7 +45,6 @@ public class PortalManager {
         ));
     }
 
-    // AIUB Standard Semester Courses
     private void initDefaultCourses() {
         defaultCourses.add(new Course("CSC1101", "Introduction to Programming", 3, "A+", 4.00, "Dr. M. M. Rahman"));
         defaultCourses.add(new Course("CSC2102", "Data Structures & Algorithms", 3, "A", 3.75, "Prof. Dr. S. Ahmed"));
@@ -56,13 +53,12 @@ public class PortalManager {
         defaultCourses.add(new Course("ENG1101", "English Reading & Composition", 3, "B+", 3.25, "Ms. T. Kabir"));
     }
 
- 
+    // --- STUDENT CRUD METHODS 
     public boolean addStudent(Student student) {
         if (student == null) return false;
-        // Check for duplicate ID
         for (Student s : students) {
             if (s.getId().equalsIgnoreCase(student.getId())) {
-                return false; // Duplicate ID found
+                return false;
             }
         }
         students.add(student);
@@ -70,12 +66,10 @@ public class PortalManager {
         return true;
     }
 
-    // READ (Get All Students)
     public List<Student> getAllStudents() {
         return new ArrayList<>(students);
     }
 
-    // READ (Find Student by ID)
     public Student getStudentById(String id) {
         if (id == null) return null;
         for (Student s : students) {
@@ -86,7 +80,6 @@ public class PortalManager {
         return null;
     }
 
-    // UPDATE (Modify existing student)
     public boolean updateStudent(Student updated) {
         if (updated == null) return false;
         for (int i = 0; i < students.size(); i++) {
@@ -99,7 +92,6 @@ public class PortalManager {
         return false;
     }
 
-    // UPDATE CGPA DIRECTLY (Used by Faculty or Admin)
     public boolean updateStudentCgpa(String studentId, double newCgpa) {
         Student s = getStudentById(studentId);
         if (s != null) {
@@ -110,7 +102,6 @@ public class PortalManager {
         return false;
     }
 
-    // DELETE (Remove student by ID)
     public boolean deleteStudent(String id) {
         if (id == null) return false;
         for (int i = 0; i < students.size(); i++) {
@@ -123,7 +114,6 @@ public class PortalManager {
         return false;
     }
 
-    // SEARCH (By ID, Name, or Department)
     public List<Student> searchStudents(String query) {
         if (query == null || query.trim().isEmpty()) {
             return getAllStudents();
@@ -140,7 +130,7 @@ public class PortalManager {
         return results;
     }
 
- 
+    
     public List<Faculty> getAllFaculty() {
         return new ArrayList<>(facultyMembers);
     }
@@ -163,13 +153,15 @@ public class PortalManager {
         saveFacultyToFile();
         return true;
     }
+
+    
     public List<Notice> getAllNotices() {
         return new ArrayList<>(notices);
     }
 
     public boolean addNotice(Notice notice) {
         if (notice == null) return false;
-        notices.add(0, notice); // Prepend to top of notice board
+        notices.add(0, notice);
         saveNoticesToFile();
         return true;
     }
@@ -189,30 +181,32 @@ public class PortalManager {
         return defaultCourses;
     }
 
+    
     public Person authenticate(String idOrEmail, String password) {
         if (idOrEmail == null || password == null) return null;
         String target = idOrEmail.trim();
+        String pass = password.trim();
 
-        // 1. Check Admin
+        
         for (Admin a : administrators) {
             if ((a.getId().equalsIgnoreCase(target) || a.getEmail().equalsIgnoreCase(target)) &&
-                 a.getPassword().equals(password)) {
+                 a.getPassword().equals(pass)) {
                 return a;
             }
         }
 
-        // 2. Check Faculty
+        
         for (Faculty f : facultyMembers) {
             if ((f.getId().equalsIgnoreCase(target) || f.getEmail().equalsIgnoreCase(target)) &&
-                 f.getPassword().equals(password)) {
+                 f.getPassword().equals(pass)) {
                 return f;
             }
         }
 
-        // 3. Check Student
+        
         for (Student s : students) {
             if ((s.getId().equalsIgnoreCase(target) || s.getEmail().equalsIgnoreCase(target)) &&
-                 s.getPassword().equals(password)) {
+                 s.getPassword() != null && s.getPassword().equals(pass)) {
                 return s;
             }
         }
@@ -220,18 +214,18 @@ public class PortalManager {
         return null;
     }
 
+    
     public void loadAllDataFromFiles() {
         loadStudentsFromFile();
         loadFacultyFromFile();
         loadNoticesFromFile();
     }
 
-    // Load Students from students.txt
     public void loadStudentsFromFile() {
         students.clear();
         File file = new File(studentFilePath);
-        if (!file.exists()) {
-            seedDefaultStudents(); // Seeds initial 2 AIUB students with CGPA!
+        if (!file.exists() || file.length() == 0) {
+            seedDefaultStudents();
             saveStudentsToFile();
             return;
         }
@@ -251,19 +245,13 @@ public class PortalManager {
                 saveStudentsToFile();
             }
         } catch (IOException e) {
-            System.err.println("Note: Loading default students due to file read error: " + e.getMessage());
             seedDefaultStudents();
         }
     }
 
-    // Save Students to students.txt
     public void saveStudentsToFile() {
         try (PrintWriter writer = new PrintWriter(new FileWriter(studentFilePath))) {
-            writer.println("# ===========================================================================");
-            writer.println("# AIUB STUDENT PORTAL - PERSISTENT DATABASE FILE (students.txt)");
-            writer.println("# Format: ID;Name;Email;Phone;Password;Department;Semester;CGPA;Credits;BloodGroup;Address");
-            writer.println("# Edit or Add more students directly here or via the Java Swing Admin GUI");
-            writer.println("# ===========================================================================");
+            writer.println("# AIUB STUDENT PORTAL - STUDENTS DATABASE");
             for (Student s : students) {
                 writer.println(s.toFileString());
             }
@@ -272,11 +260,10 @@ public class PortalManager {
         }
     }
 
-    // Load Faculty from faculty.txt
     public void loadFacultyFromFile() {
         facultyMembers.clear();
         File file = new File(facultyFilePath);
-        if (!file.exists()) {
+        if (!file.exists() || file.length() == 0) {
             seedDefaultFaculty();
             saveFacultyToFile();
             return;
@@ -304,7 +291,6 @@ public class PortalManager {
     public void saveFacultyToFile() {
         try (PrintWriter writer = new PrintWriter(new FileWriter(facultyFilePath))) {
             writer.println("# AIUB Faculty Database File");
-            writer.println("# Format: ID;Name;Email;Phone;Password;Designation;Department;RoomNumber");
             for (Faculty f : facultyMembers) {
                 writer.println(f.toFileString());
             }
@@ -313,11 +299,10 @@ public class PortalManager {
         }
     }
 
-    // Load Notices from notices.txt
     public void loadNoticesFromFile() {
         notices.clear();
         File file = new File(noticeFilePath);
-        if (!file.exists()) {
+        if (!file.exists() || file.length() == 0) {
             seedDefaultNotices();
             saveNoticesToFile();
             return;
@@ -345,7 +330,6 @@ public class PortalManager {
     public void saveNoticesToFile() {
         try (PrintWriter writer = new PrintWriter(new FileWriter(noticeFilePath))) {
             writer.println("// AIUB Notice Board Database File");
-            writer.println("// Format: ID#Title#Date#Category#Content#Author");
             for (Notice n : notices) {
                 writer.println(n.toFileString());
             }
@@ -353,35 +337,34 @@ public class PortalManager {
             System.err.println("Error saving notices.txt: " + e.getMessage());
         }
     }
+
     private void seedDefaultStudents() {
-        // DEMO STUDENT 1 (Rafiul Qador Nafi - AIUB CSE Student)
         students.add(new Student(
-            "22-48123-1",                          // Student ID
-            "Rafiul Qador Nafi",                   // Full Name
-            "rafiul.nafi@student.aiub.edu",        // AIUB Student Email
-            "+880 1711-223344",                    // Phone
-            "pass123",                             // Password
-            "Computer Science & Engineering (CSE)",// Department
-            5,                                     // Current Semester
-            3.85,                                  // CGPA (Out of 4.00)
-            68,                                    // Completed Credits
-            "A+",                                  // Blood Group
-            "Kuratoli, Khilkhet, Dhaka"            // Address
+            "26-64541-1",
+            "Rafiul Qador Nafi",
+            "rafiul.nafi@student.aiub.edu",
+            "+880 1711-223344",
+            "pass123",
+            "Computer Science & Engineering (CSE)",
+            5,
+            3.85,
+            68,
+            "A+",
+            "Mirpur, Dhaka"
         ));
 
-        // DEMO STUDENT 2 (Tasnim Ahmed - AIUB CSE Student)
         students.add(new Student(
-            "23-50114-1",                          // Student ID
-            "Tasnim Ahmed",                        // Full Name
-            "tasnim.ahmed@student.aiub.edu",       // AIUB Student Email
-            "+880 1819-556677",                    // Phone
-            "pass123",                             // Password
-            "Computer Science & Engineering (CSE)",// Department
-            4,                                     // Current Semester
-            3.72,                                  // CGPA (Out of 4.00)
-            45,                                    // Completed Credits
-            "O+",                                  // Blood Group
-            "Bashundhara R/A, Dhaka"               // Address
+            "26-64470-1",
+            "Nowshin Sadia",
+            "nowshin.sadia@student.aiub.edu",
+            "+880 1811-556677",
+            "pass123",
+            "Computer Science & Engineering (CSE)",
+            5,
+            3.80,
+            68,
+            "A+",
+            "Mirpur, Dhaka"
         ));
     }
 
@@ -396,16 +379,6 @@ public class PortalManager {
             "Computer Science & Engineering",
             "Room D-402, Building D"
         ));
-        facultyMembers.add(new Faculty(
-            "F-1005",
-            "Engr. K. Hasan",
-            "k.hasan@aiub.edu",
-            "+880 1611-998877",
-            "pass123",
-            "Assistant Professor",
-            "Computer Science & Engineering",
-            "Room D-310, Building D"
-        ));
     }
 
     private void seedDefaultNotices() {
@@ -414,24 +387,8 @@ public class PortalManager {
             "Fall 2026-2027 Mid-Term Examination Schedule Published",
             "2026-09-15",
             "Exam",
-            "All undergraduate students are advised to download their Mid-term exam permits from VUES portal. Exams commence from next Sunday.",
+            "All undergraduate students are advised to download their Mid-term exam permits from VUES portal.",
             "Office of Controller of Examinations"
-        ));
-        notices.add(new Notice(
-            "NOT-02",
-            "Registration for AIUB CS Fest 2026 is Now Open!",
-            "2026-09-10",
-            "Event",
-            "AIUB Computer Club invites all students to participate in Competitive Programming, Hackathon, and Robo Soccer. Register at Annex 1.",
-            "AIUB Computer Club (ACC)"
-        ));
-        notices.add(new Notice(
-            "NOT-03",
-            "Course Add/Drop and Final Section Adjustment Window",
-            "2026-09-05",
-            "Academic",
-            "Online add/drop window will remain open till 5:00 PM Thursday. Please contact your academic advisor for prerequisite clearances.",
-            "Registrar Office, AIUB"
         ));
     }
 }

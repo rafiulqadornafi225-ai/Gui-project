@@ -13,12 +13,10 @@ import model.Notice;
 import model.Student;
 import service.PortalManager;
 
-
 public class AdminGUI extends JFrame {
     private PortalManager portalManager;
     private Admin currentAdmin;
 
-    
     private JTextField txtId;
     private JTextField txtName;
     private JTextField txtEmail;
@@ -34,7 +32,6 @@ public class AdminGUI extends JFrame {
     private JTable tblStudents;
     private DefaultTableModel studentModel;
 
-    
     private JTable tblNotices;
     private DefaultTableModel noticeModel;
     private JTextField txtNoticeTitle;
@@ -57,7 +54,6 @@ public class AdminGUI extends JFrame {
 
         JPanel root = new JPanel(new BorderLayout());
 
-        
         JPanel banner = new JPanel(new BorderLayout());
         banner.setBackground(new Color(13, 37, 71)); // AIUB Blue
         banner.setPreferredSize(new Dimension(1040, 75));
@@ -69,7 +65,7 @@ public class AdminGUI extends JFrame {
       
         ImageIcon logoIcon = null;
         try {
-            ImageIcon originalIcon = new ImageIcon("aiub_logo.png");
+            ImageIcon originalIcon = new ImageIcon("aiub_logo2.png");
             if (originalIcon.getIconWidth() > 0) {
                 Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
                 logoIcon = new ImageIcon(scaledImage);
@@ -78,7 +74,11 @@ public class AdminGUI extends JFrame {
             logoIcon = null;
         }
         
-        JLabel lblLogo = logoIcon != null ? new JLabel(logoIcon) : new JLabel();
+        JLabel lblLogo = logoIcon != null ? new JLabel(logoIcon) : new JLabel("AIUB");
+        if (logoIcon == null) {
+            lblLogo.setForeground(Color.WHITE);
+            lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        }
         brand.add(lblLogo);
 
         JPanel titles = new JPanel();
@@ -95,7 +95,6 @@ public class AdminGUI extends JFrame {
         brand.add(titles);
         banner.add(brand, BorderLayout.WEST);
 
-      
         JButton btnLogout = new JButton("Logout") {
             @Override
             protected void paintComponent(Graphics g) {
@@ -119,7 +118,6 @@ public class AdminGUI extends JFrame {
         banner.add(btnLogout, BorderLayout.EAST);
         root.add(banner, BorderLayout.NORTH);
 
-       
         JTabbedPane tabs = new JTabbedPane();
         tabs.setFont(new Font("Segoe UI", Font.BOLD, 12));
 
@@ -128,7 +126,6 @@ public class AdminGUI extends JFrame {
 
         root.add(tabs, BorderLayout.CENTER);
 
-       
         JPanel status = new JPanel(new BorderLayout());
         status.setBackground(new Color(241, 245, 249));
         status.setBorder(BorderFactory.createEmptyBorder(6, 15, 6, 15));
@@ -145,7 +142,6 @@ public class AdminGUI extends JFrame {
         panel.setBackground(Color.WHITE);
         panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        
         JPanel form = new JPanel();
         form.setLayout(new BoxLayout(form, BoxLayout.Y_AXIS));
         form.setPreferredSize(new Dimension(340, 520));
@@ -163,7 +159,6 @@ public class AdminGUI extends JFrame {
         txtBlood = addField(form, "Blood Group (e.g. A+):");
         txtAddress = addField(form, "Residential Address:");
 
-        
         JPanel btnRow = new JPanel(new GridLayout(2, 2, 6, 6));
         btnRow.setBackground(Color.WHITE);
         btnRow.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
@@ -236,11 +231,9 @@ public class AdminGUI extends JFrame {
 
         panel.add(form, BorderLayout.WEST);
 
-        // RIGHT: Search Bar & Students Table
         JPanel right = new JPanel(new BorderLayout(8, 8));
         right.setBackground(Color.WHITE);
 
-        // Search Bar
         JPanel searchBar = new JPanel(new BorderLayout(6, 6));
         searchBar.setBackground(Color.WHITE);
         txtSearch = new JTextField();
@@ -264,7 +257,6 @@ public class AdminGUI extends JFrame {
         searchBar.add(btnSearch, BorderLayout.EAST);
         right.add(searchBar, BorderLayout.NORTH);
 
-        // Table
         String[] cols = {"ID", "Full Name", "Department", "Sem", "CGPA", "Credits", "Phone"};
         studentModel = new DefaultTableModel(cols, 0) {
             @Override
@@ -292,7 +284,6 @@ public class AdminGUI extends JFrame {
         right.add(new JScrollPane(tblStudents), BorderLayout.CENTER);
         panel.add(right, BorderLayout.CENTER);
 
-        // Action Handlers
         btnInsert.addActionListener(e -> handleInsertStudent());
         btnUpdate.addActionListener(e -> handleUpdateStudent());
         btnDelete.addActionListener(e -> handleDeleteStudent());
@@ -456,7 +447,6 @@ public class AdminGUI extends JFrame {
         p.setBackground(Color.WHITE);
         p.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        
         JPanel form = new JPanel(new GridLayout(5, 1, 6, 6));
         form.setPreferredSize(new Dimension(320, 300));
         form.setBackground(new Color(248, 250, 252));
@@ -499,7 +489,6 @@ public class AdminGUI extends JFrame {
         form.add(btnAddN);
         p.add(form, BorderLayout.WEST);
 
-        
         String[] cols = {"ID", "Date", "Category", "Title", "Author"};
         noticeModel = new DefaultTableModel(cols, 0) {
             @Override

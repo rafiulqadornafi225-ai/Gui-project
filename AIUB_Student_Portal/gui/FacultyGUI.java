@@ -29,7 +29,6 @@ public class FacultyGUI extends JFrame {
     private JComboBox<String> cmbGrade;
     private JButton btnUpdateGrade;
 
-    
     private JTextField txtNoticeTitle;
     private JTextArea txtNoticeContent;
     private JButton btnPostNotice;
@@ -49,7 +48,6 @@ public class FacultyGUI extends JFrame {
 
         JPanel root = new JPanel(new BorderLayout());
 
-        
         JPanel banner = new JPanel(new BorderLayout());
         banner.setBackground(new Color(13, 37, 71));
         banner.setPreferredSize(new Dimension(980, 75));
@@ -57,7 +55,24 @@ public class FacultyGUI extends JFrame {
 
         JPanel brandPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 12, 0));
         brandPanel.setOpaque(false);
-        JLabel lblLogo = new JLabel(ImageHelper.getAIUBLogo(50, 50));
+        
+        // --- লোগো সেটআপ (aiub_logo3.png) ---
+        ImageIcon logoIcon = null;
+        try {
+            ImageIcon originalIcon = new ImageIcon("aiub_logo3.png");
+            if (originalIcon.getIconWidth() > 0) {
+                Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+                logoIcon = new ImageIcon(scaledImage);
+            }
+        } catch (Exception e) {
+            logoIcon = null;
+        }
+        
+        JLabel lblLogo = logoIcon != null ? new JLabel(logoIcon) : new JLabel("AIUB");
+        if (logoIcon == null) {
+            lblLogo.setForeground(Color.WHITE);
+            lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        }
         brandPanel.add(lblLogo);
 
         JPanel titlePanel = new JPanel();
@@ -74,7 +89,7 @@ public class FacultyGUI extends JFrame {
         brandPanel.add(titlePanel);
         banner.add(brandPanel, BorderLayout.WEST);
 
-        // Logout Button (রঙ ও ঝাপসা ভাব ফিক্স করার জন্য কাস্টম রেন্ডারিং)
+        // Logout Button
         JButton btnLogout = new JButton("Logout") {
             @Override
             protected void paintComponent(Graphics g) {
@@ -98,7 +113,6 @@ public class FacultyGUI extends JFrame {
         banner.add(btnLogout, BorderLayout.EAST);
         root.add(banner, BorderLayout.NORTH);
 
-        // 2. MAIN SPLIT: Student Grade Evaluation & Post Notice
         JTabbedPane tabs = new JTabbedPane();
         tabs.setFont(new Font("Segoe UI", Font.BOLD, 12));
 
@@ -115,7 +129,6 @@ public class FacultyGUI extends JFrame {
         panel.setBackground(Color.WHITE);
         panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        // LEFT: Grade Update Form
         JPanel form = new JPanel();
         form.setLayout(new BoxLayout(form, BoxLayout.Y_AXIS));
         form.setPreferredSize(new Dimension(320, 500));

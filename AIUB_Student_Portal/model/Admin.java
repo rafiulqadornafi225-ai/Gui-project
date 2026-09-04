@@ -1,9 +1,5 @@
 package model;
 
-/**
- * Child Class: Admin
- * Extends abstract Person class.
- */
 public class Admin extends Person {
     private String officeRoom;
     private String accessLevel;

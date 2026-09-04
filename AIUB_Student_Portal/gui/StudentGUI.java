@@ -8,7 +8,6 @@ import model.Notice;
 import model.Student;
 import service.PortalManager;
 
-
 public class StudentGUI extends JFrame {
     private PortalManager portalManager;
     private Student currentStudent;
@@ -27,16 +26,25 @@ public class StudentGUI extends JFrame {
 
         JPanel root = new JPanel(new BorderLayout());
 
-        // 1. TOP BANNER WITH AIUB LOGO & USER INFO
         JPanel banner = new JPanel(new BorderLayout());
         banner.setBackground(new Color(13, 37, 71)); // AIUB Deep Navy
         banner.setPreferredSize(new Dimension(980, 75));
         banner.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
-        
         JPanel brandPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 12, 0));
         brandPanel.setOpaque(false);
-        JLabel lblLogo = new JLabel(ImageHelper.getAIUBLogo(50, 50));
+        
+     
+        ImageIcon rawLogo = new ImageIcon("aiub_logo1.png");
+        JLabel lblLogo;
+        if (rawLogo.getIconWidth() > 0) {
+            Image scaledImg = rawLogo.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+            lblLogo = new JLabel(new ImageIcon(scaledImg));
+        } else {
+            lblLogo = new JLabel("AIUB");
+            lblLogo.setForeground(Color.WHITE);
+            lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        }
         brandPanel.add(lblLogo);
 
         JPanel titlePanel = new JPanel();
@@ -54,7 +62,6 @@ public class StudentGUI extends JFrame {
 
         banner.add(brandPanel, BorderLayout.WEST);
 
-       
         JPanel userBox = new JPanel(new FlowLayout(FlowLayout.RIGHT, 12, 10));
         userBox.setOpaque(false);
         JLabel lblUser = new JLabel("Logged in: " + currentStudent.getName() + " | CGPA: " + String.format("%.2f", currentStudent.getCgpa()));
@@ -88,7 +95,6 @@ public class StudentGUI extends JFrame {
 
         root.add(banner, BorderLayout.NORTH);
 
-       
         JTabbedPane tabs = new JTabbedPane();
         tabs.setFont(new Font("Segoe UI", Font.BOLD, 12));
 
@@ -99,7 +105,6 @@ public class StudentGUI extends JFrame {
 
         root.add(tabs, BorderLayout.CENTER);
 
-        
         JPanel footer = new JPanel(new BorderLayout());
         footer.setBackground(new Color(241, 245, 249));
         footer.setBorder(BorderFactory.createEmptyBorder(6, 20, 6, 20));
@@ -112,13 +117,11 @@ public class StudentGUI extends JFrame {
         add(root);
     }
 
-   
     private JPanel createProfileTab() {
         JPanel p = new JPanel(new BorderLayout(20, 20));
         p.setBackground(Color.WHITE);
         p.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
 
-        
         JPanel statRow = new JPanel(new GridLayout(1, 4, 15, 0));
         statRow.setOpaque(false);
         statRow.add(createMetricBox("Cumulative CGPA", String.format("%.2f", currentStudent.getCgpa()) + " / 4.00", new Color(16, 185, 129)));
@@ -127,7 +130,6 @@ public class StudentGUI extends JFrame {
         statRow.add(createMetricBox("Academic Standing", currentStudent.getCgpa() >= 3.75 ? "Dean's Honor Roll" : "Good Standing", new Color(234, 88, 12)));
         p.add(statRow, BorderLayout.NORTH);
 
-        // Detailed Information Grid
         JPanel detailsCard = new JPanel(new GridLayout(7, 2, 12, 12));
         detailsCard.setBackground(new Color(248, 250, 252));
         detailsCard.setBorder(BorderFactory.createCompoundBorder(
@@ -183,7 +185,6 @@ public class StudentGUI extends JFrame {
         p.add(v);
     }
 
-    // TAB 2: Courses & Grades
     private JPanel createCoursesTab() {
         JPanel p = new JPanel(new BorderLayout(15, 15));
         p.setBackground(Color.WHITE);
@@ -214,7 +215,6 @@ public class StudentGUI extends JFrame {
 
         p.add(new JScrollPane(table), BorderLayout.CENTER);
 
-     
         JPanel bottom = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
         bottom.setBackground(new Color(248, 250, 252));
         bottom.setBorder(BorderFactory.createLineBorder(new Color(226, 232, 240)));
@@ -227,7 +227,6 @@ public class StudentGUI extends JFrame {
         return p;
     }
 
-    
     private JPanel createNoticeTab() {
         JPanel p = new JPanel(new BorderLayout(15, 15));
         p.setBackground(Color.WHITE);
@@ -258,7 +257,6 @@ public class StudentGUI extends JFrame {
         return p;
     }
 
-   
     private JPanel createIdCardTab() {
         JPanel p = new JPanel(new GridBagLayout());
         p.setBackground(new Color(241, 245, 249));
@@ -271,17 +269,27 @@ public class StudentGUI extends JFrame {
             BorderFactory.createEmptyBorder(15, 20, 15, 20)
         ));
 
-        
         JPanel cardHead = new JPanel(new BorderLayout());
         cardHead.setOpaque(false);
-        JLabel lblLogo = new JLabel(ImageHelper.getAIUBLogo(40, 40));
+        
+       
+        ImageIcon cardLogoRaw = new ImageIcon("aiub_logo1.png");
+        JLabel cardLogoLabel;
+        if (cardLogoRaw.getIconWidth() > 0) {
+            Image cardLogoImg = cardLogoRaw.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+            cardLogoLabel = new JLabel(new ImageIcon(cardLogoImg));
+        } else {
+            cardLogoLabel = new JLabel("AIUB");
+            cardLogoLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
+            cardLogoLabel.setForeground(new Color(13, 37, 71));
+        }
+        
         JLabel lblUniv = new JLabel("<html><b>AMERICAN INTERNATIONAL UNIVERSITY-BANGLADESH</b><br><small>STUDENT IDENTIFICATION CARD</small></html>");
         lblUniv.setForeground(new Color(13, 37, 71));
-        cardHead.add(lblLogo, BorderLayout.WEST);
+        cardHead.add(cardLogoLabel, BorderLayout.WEST);
         cardHead.add(lblUniv, BorderLayout.CENTER);
         card.add(cardHead, BorderLayout.NORTH);
 
-    
         JPanel cardBody = new JPanel(new GridLayout(4, 1, 4, 4));
         cardBody.setOpaque(false);
         cardBody.setBorder(BorderFactory.createEmptyBorder(15, 0, 10, 0));
@@ -300,7 +308,6 @@ public class StudentGUI extends JFrame {
         cardBody.add(lblBlood);
         card.add(cardBody, BorderLayout.CENTER);
 
-       
         JLabel lblBar = new JLabel("||| | ||||| ||| |||||||| |||| | ||||||||| | |||||", SwingConstants.CENTER);
         lblBar.setFont(new Font("Courier New", Font.BOLD, 16));
         lblBar.setForeground(Color.DARK_GRAY);

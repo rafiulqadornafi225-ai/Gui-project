@@ -1,7 +1,4 @@
-# ===========================================================================
-# AIUB STUDENT PORTAL - PERSISTENT DATABASE FILE (students.txt)
-# Format: ID;Name;Email;Phone;Password;Department;Semester;CGPA;Credits;BloodGroup;Address
-# Edit or Add more students directly here or via the Java Swing Admin GUI
-# ===========================================================================
-22-48123-1;Rafiul Qador Nafi;rafiul.nafi@student.aiub.edu;+880 1711-223344;pass123;Computer Science & Engineering (CSE);5;3.85;68;A+;Kuratoli, Khilkhet, Dhaka
-23-50114-1;NAFI;tasnim.ahmed@student.aiub.edu;+880 1819-556677;pass123;Computer Science & Engineering (CSE);4;2.5;45;O+;Bashundhara R/A, Dhaka
+# AIUB STUDENT PORTAL - STUDENTS DATABASE
+26-64541-1;Rafiul Qador Nafi;rafiul.nafi@student.aiub.edu;+880 1711-223344;pass123;Computer Science & Engineering (CSE);5;3.85;68;A+;Mirpur, Dhaka
+26-64470-1;Nowshin Sadia;nowshin.sadia@student.aiub.edu;+880 1811-556677;pass123;Computer Science & Engineering (CSE);5;3.8;68;A+;Mirpur, Dhaka
+23343-21-1;Ramisa;;;pass123;cse;3;2.59;68;;
