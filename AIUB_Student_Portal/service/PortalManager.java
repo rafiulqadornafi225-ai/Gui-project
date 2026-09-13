@@ -9,7 +9,6 @@ import model.Faculty;
 import model.Notice;
 import model.Person;
 import model.Student;
-
 public class PortalManager {
     private List<Student> students;
     private List<Faculty> facultyMembers;
@@ -18,7 +17,10 @@ public class PortalManager {
     private List<Notice> notices;
 
     private final String studentFilePath = "students.txt";
+
     private final String facultyFilePath = "faculty.txt";
+
+
     private final String noticeFilePath = "notices.txt";
 
     public PortalManager() {
@@ -32,7 +34,6 @@ public class PortalManager {
         initDefaultCourses();
         loadAllDataFromFiles();
     }
-
     private void initDefaultAdmin() {
         administrators.add(new Admin(
             "admin",
@@ -44,7 +45,6 @@ public class PortalManager {
             "SUPER_ADMIN"
         ));
     }
-
     private void initDefaultCourses() {
         defaultCourses.add(new Course("CSC1101", "Introduction to Programming", 3, "A+", 4.00, "Dr. M. M. Rahman"));
         defaultCourses.add(new Course("CSC2102", "Data Structures & Algorithms", 3, "A", 3.75, "Prof. Dr. S. Ahmed"));
@@ -53,7 +53,6 @@ public class PortalManager {
         defaultCourses.add(new Course("ENG1101", "English Reading & Composition", 3, "B+", 3.25, "Ms. T. Kabir"));
     }
 
-    // --- STUDENT CRUD METHODS 
     public boolean addStudent(Student student) {
         if (student == null) return false;
         for (Student s : students) {
@@ -130,7 +129,6 @@ public class PortalManager {
         return results;
     }
 
-    
     public List<Faculty> getAllFaculty() {
         return new ArrayList<>(facultyMembers);
     }
@@ -154,7 +152,6 @@ public class PortalManager {
         return true;
     }
 
-    
     public List<Notice> getAllNotices() {
         return new ArrayList<>(notices);
     }
@@ -181,13 +178,11 @@ public class PortalManager {
         return defaultCourses;
     }
 
-    
     public Person authenticate(String idOrEmail, String password) {
         if (idOrEmail == null || password == null) return null;
         String target = idOrEmail.trim();
         String pass = password.trim();
 
-        
         for (Admin a : administrators) {
             if ((a.getId().equalsIgnoreCase(target) || a.getEmail().equalsIgnoreCase(target)) &&
                  a.getPassword().equals(pass)) {
@@ -195,7 +190,6 @@ public class PortalManager {
             }
         }
 
-        
         for (Faculty f : facultyMembers) {
             if ((f.getId().equalsIgnoreCase(target) || f.getEmail().equalsIgnoreCase(target)) &&
                  f.getPassword().equals(pass)) {
@@ -203,7 +197,6 @@ public class PortalManager {
             }
         }
 
-        
         for (Student s : students) {
             if ((s.getId().equalsIgnoreCase(target) || s.getEmail().equalsIgnoreCase(target)) &&
                  s.getPassword() != null && s.getPassword().equals(pass)) {
@@ -214,7 +207,6 @@ public class PortalManager {
         return null;
     }
 
-    
     public void loadAllDataFromFiles() {
         loadStudentsFromFile();
         loadFacultyFromFile();

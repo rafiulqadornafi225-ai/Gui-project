@@ -60,12 +60,11 @@ public class Student extends Person {
 
     @Override
     public String toFileString() {
-        // Serialized representation for students.txt
         return getId() + ";" + getName() + ";" + getEmail() + ";" + getPhone() + ";" + getPassword() + ";"
                 + department + ";" + semester + ";" + cgpa + ";" + completedCredits + ";" + bloodGroup + ";" + address;
     }
 
-    // Static Deserialization Helper for File I/O
+    
     public static Student fromFileString(String line) {
         if (line == null || line.trim().isEmpty() || line.startsWith("#")) return null;
         String[] parts = line.split(";");

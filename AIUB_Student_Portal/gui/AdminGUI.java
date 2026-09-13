@@ -483,11 +483,14 @@ public class AdminGUI extends JFrame {
         });
 
         form.add(new JLabel("Notice Title:"));
+
         form.add(txtNoticeTitle);
+
         form.add(new JLabel("Category (Exam / Academic / Event):"));
         form.add(txtNoticeCategory);
         form.add(btnAddN);
         p.add(form, BorderLayout.WEST);
+        
 
         String[] cols = {"ID", "Date", "Category", "Title", "Author"};
         noticeModel = new DefaultTableModel(cols, 0) {

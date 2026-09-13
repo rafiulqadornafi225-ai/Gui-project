@@ -1,13 +1,8 @@
 package model;
-
-/**
- * Child Class: Faculty (Teacher)
- * Extends abstract Person class.
- */
 public class Faculty extends Person {
-    private String designation; // e.g. "Assistant Professor", "Lecturer"
-    private String department;  // e.g. "Computer Science & Engineering"
-    private String roomNumber;  // e.g. "D-402, Building D"
+    private String designation; 
+    private String department; 
+    private String roomNumber; 
 
     public Faculty(String id, String name, String email, String phone, String password,
                    String designation, String department, String roomNumber) {
@@ -18,12 +13,16 @@ public class Faculty extends Person {
     }
 
     public String getDesignation() { return designation; }
+   
+   
     public void setDesignation(String designation) { this.designation = designation; }
 
+   
     public String getDepartment() { return department; }
     public void setDepartment(String department) { this.department = department; }
 
     public String getRoomNumber() { return roomNumber; }
+    
     public void setRoomNumber(String roomNumber) { this.roomNumber = roomNumber; }
 
     @Override

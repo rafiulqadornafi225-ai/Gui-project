@@ -1,15 +1,9 @@
 package gui;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-
-/**
- * ImageHelper: Guarantees 100% crash-free image loading in Java Swing.
- * If assets/logo.png exists, it loads it. Otherwise, it dynamically draws
- * the authentic AIUB circular seal & emblem using Java 2D Graphics!
- */
+import javax.swing.*;
 public class ImageHelper {
 
     // AIUB Brand Colors
@@ -17,9 +11,8 @@ public class ImageHelper {
     public static final Color AIUB_GOLD = new Color(244, 208, 111); // #F4D06F Golden Yellow
     public static final Color AIUB_CYAN = new Color(74, 144, 226);  // Accent Blue
 
-    // Load or generate AIUB Logo (size: width x height)
+    //  AIUB Logo (size: width x height)
     public static ImageIcon getAIUBLogo(int width, int height) {
-        // 1. Try to load from assets folder
         String[] possiblePaths = {
             "assets/logo.png",
             "assets/aiub_logo.png",
@@ -35,8 +28,6 @@ public class ImageHelper {
                 return new ImageIcon(img);
             }
         }
-
-        // 2. Fallback: Draw high-definition authentic AIUB Seal programmatically
         BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = img.createGraphics();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -45,36 +36,29 @@ public class ImageHelper {
         int cx = width / 2;
         int cy = height / 2;
         int radius = Math.min(width, height) / 2 - 4;
-
-        // Outer Navy Ring
         g2.setColor(AIUB_BLUE);
         g2.fillOval(cx - radius, cy - radius, radius * 2, radius * 2);
 
-        // Gold Inner Ring Border
         g2.setColor(AIUB_GOLD);
         g2.setStroke(new BasicStroke(3));
         g2.drawOval(cx - radius + 3, cy - radius + 3, (radius - 3) * 2, (radius - 3) * 2);
 
-        // Inner Light Blue Shield Area
+        
         int innerR = (int)(radius * 0.72);
         g2.setColor(new Color(225, 240, 255));
         g2.fillOval(cx - innerR, cy - innerR, innerR * 2, innerR * 2);
-
-        // Draw Graduation Cap / Book Symbol
         g2.setColor(AIUB_BLUE);
         int capW = (int)(innerR * 0.9);
         int capH = (int)(innerR * 0.35);
         int[] xPoints = { cx, cx + capW / 2, cx, cx - capW / 2 };
         int[] yPoints = { cy - capH, cy - capH / 2, cy, cy - capH / 2 };
         g2.fillPolygon(xPoints, yPoints, 4);
-
-        // Gold Tassel
         g2.setColor(AIUB_GOLD);
         g2.setStroke(new BasicStroke(2));
         g2.drawLine(cx, cy - capH / 2, cx + capW / 2 + 4, cy);
         g2.fillOval(cx + capW / 2 + 2, cy - 1, 5, 5);
 
-        // Text "AIUB" in the middle
+        // Text AIUB
         g2.setColor(AIUB_BLUE);
         g2.setFont(new Font("Segoe UI", Font.BOLD, Math.max(12, width / 7)));
         FontMetrics fm = g2.getFontMetrics();
@@ -82,8 +66,6 @@ public class ImageHelper {
         int tx = cx - (fm.stringWidth(text) / 2);
         int ty = cy + fm.getAscent() / 2 + (innerR / 3);
         g2.drawString(text, tx, ty);
-
-        // Foundation Year "1994"
         g2.setFont(new Font("Segoe UI", Font.PLAIN, Math.max(8, width / 14)));
         FontMetrics fm2 = g2.getFontMetrics();
         String yr = "EST. 1994";
@@ -92,25 +74,17 @@ public class ImageHelper {
         g2.dispose();
         return new ImageIcon(img);
     }
-
-    // Creates an AIUB Campus Banner Header
     public static ImageIcon getCampusBanner(int width, int height) {
         BufferedImage banner = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = banner.createGraphics();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        // Gradient Navy to Deep Royal Blue
         GradientPaint gp = new GradientPaint(0, 0, new Color(13, 37, 71), width, height, new Color(24, 76, 140));
         g2.setPaint(gp);
         g2.fillRect(0, 0, width, height);
-
-        // Subtle Globe / Arch Pattern
         g2.setColor(new Color(255, 255, 255, 25));
         g2.fillOval(width - height * 2, -height / 2, height * 3, height * 2);
         g2.setStroke(new BasicStroke(2));
         g2.drawOval(width - height * 2, -height / 2, height * 3, height * 2);
-
-        // Bottom Gold Accent Line
         g2.setColor(AIUB_GOLD);
         g2.fillRect(0, height - 4, width, 4);
 

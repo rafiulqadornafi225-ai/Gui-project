@@ -18,8 +18,6 @@ public abstract class Person {
         this.role = role;
         this.password = password;
     }
-
-    // Getters and Setters with Encapsulation & Basic Validation
     public String getId() { return id; }
     public void setId(String id) {
         if (id == null || id.trim().isEmpty()) {
@@ -47,8 +45,6 @@ public abstract class Person {
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
-
-    // Abstract Methods (Child classes MUST override these -> Polymorphism)
     public abstract String getRoleTitle();
     public abstract String getDetailsSummary();
     public abstract String toFileString();

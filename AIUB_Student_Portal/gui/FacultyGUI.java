@@ -9,14 +9,6 @@ import model.Faculty;
 import model.Notice;
 import model.Student;
 import service.PortalManager;
-
-/**
- * FacultyGUI: Official AIUB Faculty Portal for Teachers
- * Features:
- * 1. Faculty Profile & Room Info
- * 2. Enrolled Students Grade & CGPA Management (Directly updates students.txt!)
- * 3. Class Announcements & Notice Posting (Directly updates notices.txt!)
- */
 public class FacultyGUI extends JFrame {
     private PortalManager portalManager;
     private Faculty currentFaculty;

@@ -1,5 +1,5 @@
 // AIUB Notice Board Database File
-// Format: ID#Title#Date#Category#Content#Author
+NOT-4#nmm#2026-09-04#Academic##AIUB Registrar Office
 NOT-01#Fall 2026-2027 Mid-Term Examination Schedule Published#2026-09-15#Exam#All undergraduate students are advised to download their Mid-term exam permits from VUES portal. Exams commence from next Sunday.#Office of Controller of Examinations
 NOT-02#Registration for AIUB CS Fest 2026 is Now Open!#2026-09-10#Event#AIUB Computer Club invites all students to participate in Competitive Programming, Hackathon, and Robo Soccer. Register at Annex 1.#AIUB Computer Club (ACC)
 NOT-03#Course Add/Drop and Final Section Adjustment Window#2026-09-05#Academic#Online add/drop window will remain open till 5:00 PM Thursday. Please contact your academic advisor for prerequisite clearances.#Registrar Office, AIUB
