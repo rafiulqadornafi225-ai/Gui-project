@@ -1,20 +1,22 @@
 @echo off
-title AIUB Student Portal - 1-Click Runner
 echo =========================================================================
 echo   AMERICAN INTERNATIONAL UNIVERSITY-BANGLADESH (AIUB)
-echo   Student & Faculty Portal System - Pure Java Swing Application
+echo   Student Portal System
 echo   Compiling Packages: model/, service/, gui/, Start.java
 echo =========================================================================
+
 if not exist bin mkdir bin
 
-javac -encoding UTF-8 -d bin model\*.java service\*.java gui\*.java Start.java
-if %ERRORLEVEL% NEQ 0 (
+REM Compiling java files using forward slashes to avoid wildcard errors
+javac -d bin model/*.java service/*.java gui/*.java Start.java
+
+if %errorlevel% neq 0 (
     echo [ERROR] Compilation failed! Please ensure JDK is installed and in PATH.
     pause
-    exit /b %ERRORLEVEL%
+    exit /b %errorlevel%
 )
 
-echo [OK] Compilation successful!
-echo Launching AIUB Portal GUI...
+echo.
+echo Running Application...
 java -cp bin Start
 pause
